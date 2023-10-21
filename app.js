@@ -58,7 +58,7 @@ function btnPass() {
     let userColor = btn.getAttribute("id");
     userseq.push(userColor);
 
-    checkBtn(userseq.length - 1);
+    checkBtn(userseq.length -1);
 }
 
 let allbtn = document.querySelectorAll(".btn");
@@ -94,4 +94,3 @@ function reset() {
     userseq = [];
     level = 0;
 }
-
