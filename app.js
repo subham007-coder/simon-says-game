@@ -4,7 +4,8 @@ let userseq = [];
 let btns = ["yellow", "red", "purple", "green"];
 
 let started = false;
-let lavel = 0;
+let level = 0;
+let highScore = level;
 
 let h2 = document.querySelector("h2");
 
@@ -13,13 +14,18 @@ document.addEventListener("keypress", () => {
         console.log("game start");
         started = true;
 
-        lavelup();
+        levelup();
     }
 });
 
-function lavelup() {
-    lavel++;
-    h2.innerText = `lavel ${lavel}`;
+function levelup() {
+    userseq = [];
+    level++;
+    if (level >= highScore) {
+        document.querySelector(".high-score").innerHTML = `Your High Score Was ${highScore}`;
+        highScore++;
+    }
+    h2.innerText = `level ${level}`;
 
     // random btn function
     let random = Math.floor(Math.random() * 3);
@@ -51,23 +57,41 @@ function btnPass() {
 
     let userColor = btn.getAttribute("id");
     userseq.push(userColor);
-    
-    checkBtn();
+
+    checkBtn(userseq.length - 1);
 }
 
 let allbtn = document.querySelectorAll(".btn");
 
-    allbtn.forEach((btns) => {
+allbtn.forEach((btns) => {
     btns.addEventListener("click", btnPass);
 })
 
-function checkBtn() {
-    // console.log("curr level : ", lavel);
-    let idx = lavel -1;
-
+function checkBtn(idx) {
     if (userseq[idx] === gameSeq[idx]) {
-        console.log("same vaue");
-    } else{
-        h2.innerText = `Game over! Press any key to start.`;
+        if (userseq.length == gameSeq.length) {
+            setTimeout(() => {
+                levelup();
+
+            }, 1000);
+        }
+        console.log("same value");
+    } else {
+        h2.innerHTML = `Game over!  Your Score Was ${level} <br> Press Any Key To Start.`;
+        document.querySelector("body").style.backgroundColor = "red";
+        document.querySelector("body").style.color = "white";
+        setTimeout(() => {
+            document.querySelector("body").style.backgroundColor = "white";
+            document.querySelector("body").style.color = "black";
+        }, 150);
+        reset();
     }
 }
+
+function reset() {
+    started = false;
+    gameSeq = [];
+    userseq = [];
+    level = 0;
+}
+
