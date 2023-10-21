@@ -50,11 +50,24 @@ function btnPass() {
     userFlash(btn);
 
     let userColor = btn.getAttribute("id");
-    console.log(userColor);
+    userseq.push(userColor);
+    
+    checkBtn();
 }
 
 let allbtn = document.querySelectorAll(".btn");
 
-allbtn.forEach( (btns) => {
+    allbtn.forEach((btns) => {
     btns.addEventListener("click", btnPass);
 })
+
+function checkBtn() {
+    // console.log("curr level : ", lavel);
+    let idx = lavel -1;
+
+    if (userseq[idx] === gameSeq[idx]) {
+        console.log("same vaue");
+    } else{
+        h2.innerText = `Game over! Press any key to start.`;
+    }
+}
